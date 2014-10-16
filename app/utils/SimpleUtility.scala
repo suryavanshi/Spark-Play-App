@@ -6,7 +6,7 @@ import org.apache.spark.SparkConf
 object SimpleUtility {
 
   def simpleApp {
-    val logFile = "public/data/README.md" // Should be some file on your system
+    val logFile = "C:/projdata/README.md" // Should be some file on your system
     val conf = new SparkConf(false) // skip loading external settings
       .setMaster("local[4]") // run locally with enough threads
       .setAppName("firstSparkApp")

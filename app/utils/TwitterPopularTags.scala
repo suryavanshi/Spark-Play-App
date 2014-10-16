@@ -26,20 +26,27 @@ object TwitterPopularTags {
     twitter.setOAuthConsumer(consumerKey, consumerSecret)
     twitter.setOAuthAccessToken(new AccessToken(accessToken, accessTokenSecret))
     
-    val driverPort = 8080
-    val driverHost = "localhost"
+    /*val driverPort = 60837
+    val driverHost = "192.168.56.1"
     val conf = new SparkConf(false) // skip loading external settings
       .setMaster("local[4]") // run locally with enough threads
       .setAppName("firstSparkApp")
       .set("spark.logConf", "true")
       .set("spark.driver.port", s"$driverPort")
       .set("spark.driver.host", s"$driverHost")
-      .set("spark.akka.logLifecycleEvents", "true")
-
+      .set("spark.akka.logLifecycleEvents", "true")*/
+    
+    val conf = new SparkConf(false) // skip loading external settings
+      .setMaster("local[4]") // run locally with enough threads
+      .setAppName("firstSparkApp")
+      .set("spark.logConf", "true")
+      .set("spark.driver.host", "localhost")
+      
+    println("here")
     val ssc = new StreamingContext(conf, Seconds(2))
-    val filters = Seq("fifa")
+    val filters = Seq("nike")
     val stream = TwitterUtils.createStream(ssc, Option(twitter.getAuthorization()), filters)
-
+    println(stream)
     val hashTags = stream.flatMap(status => status.getText.split(" ").filter(_.startsWith("#")))
     
     val topCounts60 = hashTags.map((_, 1)).reduceByKeyAndWindow(_ + _, Seconds(60))

@@ -2,16 +2,16 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits._
-
 import utils.SparkMLLibUtility
+import utils.TwitterPopularTags
 
 object Application extends Controller {
 
   def index = Action {
-    Future{SparkMLLibUtility.SparkMLLibExample}
+    //Future{SparkMLLibUtility.SparkMLLibExample}
+    Future{TwitterPopularTags.TwitterStreamUtil}
     Ok(views.html.index(""))
   }
 
